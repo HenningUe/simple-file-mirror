@@ -12,12 +12,12 @@ setup(
         "Source missing, destination present-> [No action]"
         "'Tagging' is done via json-file, storing files already been copied."),
     url='https://github.com/HenningUe/simple-file-sync',
-    author='Henning Uekötter',
+    author='Henning UekÃ¶tter',
     author_email='ue.henning@gmail.com',
     license='MIT License',
     packages=['simplefilemirror'],
-    install_requires=['python-utils=>3.4.5',
-                      'progressbar2=>4.2.0',
+    install_requires=['python-utils >= 3.4.5',
+                      'progressbar2 >= 4.2.0',
                       ],
 
     classifiers=[

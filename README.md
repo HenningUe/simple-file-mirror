@@ -1,7 +1,7 @@
 # simple-file-mirror
 A simple  - one way only - file mirroring package
 
-
+### Description
 In fact, it is more like a file update mechanism. 
 Update actions are:
 * Source file is present, destination missing, not tagged -> Copy.
@@ -10,3 +10,6 @@ Update actions are:
 * Source file is missing, destination present-> [No action]
 
 'Tagging' is done via a json-file, which trackes files already copied.
+
+### Example
+A running example is available in ```'_test_alone'```. Run ```'run_test.py'``` for demonstration.
