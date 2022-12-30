@@ -2,15 +2,24 @@ from setuptools import setup
 
 setup(
     name='simplefilemirror',
-    version='1.0.0',
+    version='1.0.3',
     description='Simple file mirror',
     long_description=(
-        "Updates files from the source folder to the destination folder. 'Update' means:"
-        "Source present, destination missing, not tagged -> Copy."
-        "Source present, destination missing, tagged -> [No action]."
-        "Source present, destination present-> [No action]."
-        "Source missing, destination present-> [No action]"
-        "'Tagging' is done via json-file, storing files already been copied."),
+"""A simple - one way only - file mirroring package
+
+In fact, it is more like a file update mechanism. Update actions are:
+
+- Source file is present, destination missing, not tagged -> Copy
+
+- Source file is present, destination missing, tagged -> [No action]
+
+- Source file is present, destination present-> [No action]
+
+- Source file is missing, destination present-> [No action]
+
+
+‘Tagging’ is done via a json-file, which tracks files already copied.
+"""),
     url='https://github.com/HenningUe/simple-file-sync',
     author='Henning Uekötter',
     author_email='ue.henning@gmail.com',
