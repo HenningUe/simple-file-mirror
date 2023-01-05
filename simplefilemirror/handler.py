@@ -165,7 +165,7 @@ class FileCopierTagger(object):
             storage_dir = self._get_src_data_storage_dir()
             dataitem_list = self._restore_dataitem_list(storage_dir)
             if not self._store_meta_at_trg \
-               or (dataitem_list is not None and any(dataitem_list)):
+               or (dataitem_list is not None and len(dataitem_list)):
                 return dataitem_list
         if self._store_meta_at_trg:
             storage_dir = self._get_trg_data_storage_dir()
@@ -178,7 +178,7 @@ class FileCopierTagger(object):
         for existing_file in existing_json_files:
             source_json_file = os.path.join(storage_dir, existing_file)
             data = self._unserialize_from_json(source_json_file)
-            if data is not None and any(data):
+            if data is not None and len(data) and 'dataitem_list' in data:
                 dataitem_list = data['dataitem_list']
                 self._last_datetime = \
                     datetime.datetime.strptime(data['timestamp'], "%Y_%m_%d__%H_%M_%S")
