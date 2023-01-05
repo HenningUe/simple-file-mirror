@@ -3,6 +3,6 @@ simplefilemirror
 Updates files from the source folder to the destination folder.
 """
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 __author__ = 'Henning Uekötter'
 __credits__ = 'Python community'

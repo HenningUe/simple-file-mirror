@@ -1,5 +1,6 @@
 
 import os
+import sys
 import pathlib
 try:
     import ConfigParser as configparser
@@ -96,8 +97,8 @@ class FileSyncIni(object):
     def create_template(cls):
         tmpl = """
         [{computer_name}]
-        # you can use environment vars
-        target_directory=C:\\path\\to\\your\\pict\\
+        # fill in the target dir. The section name is the PC-name. You can use environment vars
+        target_directory=C:\\path\\to\\your\\fotos
         """
         tmpl = textwrap.dedent(tmpl)
         tmpl = tmpl[1:].format(computer_name=platform.node().lower())
@@ -121,7 +122,7 @@ def _get_my_drive_name():
 
 def _get_my_drive():
     if _glob.my_drive is None:
-        my_file = __file__
+        my_file = sys.argv[0]  # __file__
         my_drive = os.path.splitdrive(my_file)[0]
         return my_drive
     else:
