@@ -121,9 +121,8 @@ def _get_my_drive_name():
 
 
 def _get_my_drive():
-    if _glob.my_drive is None:
+    my_drive = _glob.my_drive
+    if my_drive is None:
         my_file = sys.argv[0]  # __file__
         my_drive = os.path.splitdrive(my_file)[0]
-        return my_drive
-    else:
-        return _glob.my_drive
+    return my_drive
