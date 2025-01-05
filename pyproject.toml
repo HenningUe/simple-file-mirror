@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simplefilemirror"
-version = "1.0.5"
+version = "1.0.6"
 dependencies = [
   'python-utils>=3.4.5',
   'progressbar2>=4.2.0',
