@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simplefilemirror"
+version = "1.0.5"
+dependencies = [
+  'python-utils>=3.4.5',
+  'progressbar2>=4.2.0',
+]
+
+requires-python = ">=3.12"
+authors = [
+  {name = "Henning Uekötter", email='henning@gmail.com'}
+]
+maintainers = [
+]
+description = "Simple file mirror"
+readme = "README.rst"
+license = {file = "LICENSE.txt"}
+keywords = ["sync", "synchronize", "mirror", "file"]
+classifiers = [
+  'Development Status :: 5 - Production/Stable',
+  'Intended Audience :: End Users/Desktop',
+  'License :: OSI Approved :: MIT License',
+  'Topic :: System :: Filesystems ',
+  'Operating System :: POSIX :: Linux',
+  'Operating System :: MacOS :: MacOS X',
+  'Operating System :: Microsoft :: Windows',
+  'Programming Language :: Python :: 3',
+]
+
+[project.optional-dependencies]
+# open, but not needed
+
+[project.urls]
+Repository='https://github.com/HenningUe/simple-file-sync'
+
+[project.scripts]
+# open
+
+[project.gui-scripts]
+# open
+
+[project.entry-points."spam.magical"]
+# open
