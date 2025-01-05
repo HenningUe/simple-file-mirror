@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='simplefilemirror',
-    version='1.0.2',
+    version='1.0.4',
     description='Simple file mirror',
     long_description=(
 """A simple - one way only - file mirroring package
