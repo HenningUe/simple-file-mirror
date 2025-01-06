@@ -116,7 +116,7 @@ def _get_my_drive_name():
     if drive_name is None:
         my_drive = _get_my_drive()
         drive_name = _winapi.get_volume_name(my_drive)
-    return _glob.my_drive_name
+    return drive_name
 
 
 def _get_my_drive():
