@@ -1,0 +1,15 @@
+LICENSE
+README.rst
+pyproject.toml
+setup.py
+simplefilemirror/__init__.py
+simplefilemirror/__version__.py
+simplefilemirror/_get_dir.py
+simplefilemirror/_glob.py
+simplefilemirror/_winapi.py
+simplefilemirror/handler.py
+simplefilemirror.egg-info/PKG-INFO
+simplefilemirror.egg-info/SOURCES.txt
+simplefilemirror.egg-info/dependency_links.txt
+simplefilemirror.egg-info/requires.txt
+simplefilemirror.egg-info/top_level.txt

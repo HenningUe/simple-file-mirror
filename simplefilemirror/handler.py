@@ -9,18 +9,23 @@ import datetime
 from . import _winapi
 
 
-class DataSyncHandlerConfig(object):
+class DataSyncHandlerConfig:
 
-    def __init__(self, file_exts_allowlist=list(),
-                 directory_blocklist=list(),
+    def __init__(self,
+                 file_exts_allowlist=None,
+                 directory_blocklist=None,
                  store_meta_at_src=True, store_meta_at_trg=True,
                  meta_dir_name=None,
                  data_tagging_meta_root_dir=None,
                  hide_meta_dir=True,
                  number_meta_backup_files=10,
                  progress_callback=None,):
-        self.directory_blocklist = [dbl.lower() for dbl in directory_blocklist]
+        if file_exts_allowlist is None:
+            file_exts_allowlist = list()
         self.file_exts_allowlist = [fe.lower() for fe in file_exts_allowlist]
+        if directory_blocklist is None:
+            directory_blocklist = list()
+        self.directory_blocklist = [dbl.lower() for dbl in directory_blocklist]
         self.store_meta_at_src = store_meta_at_src
         self.store_meta_at_trg = store_meta_at_trg
         self.meta_dir_name = meta_dir_name
@@ -30,7 +35,7 @@ class DataSyncHandlerConfig(object):
         self.progress_callback = progress_callback
 
 
-class DataSyncHandler(object):
+class DataSyncHandler:
 
     def __init__(self, src_dir_root, trg_dir_root, data_sync_config=None):
         self.src_dir_root = src_dir_root
@@ -55,7 +60,7 @@ class DataSyncHandler(object):
         #       'file_dir_type': u'file',
         #       'full_filename': r'D:\Pictures\ft\new.jpg'}]
         copied_files = list()
-        if not len(last_changes):
+        if len(last_changes) == 0:
             return copied_files
         already_copied_dataitem_list = self._file_copier_tagger.restore_dataitem_list()
         already_copied_dataitem_list = set(already_copied_dataitem_list)
@@ -65,7 +70,7 @@ class DataSyncHandler(object):
             if last_chg['action'] not in ['Created'] \
                or last_chg['file_dir_type'] not in ['file'] \
                or (os.path.basename(os.path.dirname(last_chg['full_filename'])) ==
-                   self._file_copier_tagger._META_DATA_DIR_NAME_DEFAULT):
+                   self._file_copier_tagger.META_DATA_DIR_NAME_DEFAULT):
                 continue
             src_rel_path = os.path.relpath(last_chg['full_filename'], self.src_dir_root).lower()
             src_dir = os.path.basename(os.path.split(last_chg['full_filename'])[0])
@@ -78,9 +83,10 @@ class DataSyncHandler(object):
                    and file_ext.lower() not in self.data_sync_config.file_exts_allowlist) \
                or src_rel_path in already_copied_dataitem_list:
                 continue
-            files_to_be_copied.append(dict(src=last_chg['full_filename'],
-                                           trg=trg_file,
-                                           src_rel=src_rel_path))
+            files_to_be_copied.append(
+                dict(src=last_chg['full_filename'],  #pylint: disable=use-dict-literal
+                trg=trg_file,
+                src_rel=src_rel_path))
         return self._copy_files_to_be_copied(files_to_be_copied)
 
     def sync_files_full(self):
@@ -88,7 +94,7 @@ class DataSyncHandler(object):
         already_copied_dataitem_list = set(already_copied_dataitem_list)
         src_files_all = {os.path.join(x[0], y) for x in os.walk(self.src_dir_root) for y in x[2]
                          if (os.path.basename(x[0])
-                             != self._file_copier_tagger._META_DATA_DIR_NAME_DEFAULT)}
+                             != self._file_copier_tagger.META_DATA_DIR_NAME_DEFAULT)}
         src_rel_files_all = {os.path.relpath(f, self.src_dir_root).lower() for f in src_files_all}
         trg_files = {os.path.join(x[0], y) for x in os.walk(self.trg_dir_root) for y in x[2]}
         trg_rel_files = {os.path.relpath(f, self.trg_dir_root).lower() for f in trg_files}
@@ -140,7 +146,7 @@ class DataSyncHandler(object):
 
 class FileCopierTagger(object):
 
-    _META_DATA_DIR_NAME_DEFAULT = "_data"
+    META_DATA_DIR_NAME_DEFAULT = "_data"
     _storage_file_name = "sync_file_list"
 
     def __init__(self, src_dir_path, trg_dir_path, meta_dir_name=None, hide_meta_dir=False,
@@ -194,7 +200,7 @@ class FileCopierTagger(object):
             except IOError:
                 pass
         timestamp = datetime.datetime.now().strftime("%Y_%m_%d__%H_%M_%S")
-        postfix = "_{}.json".format(timestamp)
+        postfix = f"_{timestamp}.json"
         target_json_file = os.path.join(storage_dir, self._storage_file_name + postfix)
         data = dict(dataitem_list=dataitem_list, timestamp=timestamp)
         self._serialize_to_json(target_json_file, data)
@@ -217,7 +223,7 @@ class FileCopierTagger(object):
 
     def _get_meta_dir_name(self):
         if self._meta_dir_name is None:
-            return self._META_DATA_DIR_NAME_DEFAULT
+            return self.META_DATA_DIR_NAME_DEFAULT
         else:
             return self._meta_dir_name
 
@@ -239,6 +245,6 @@ class FileCopierTagger(object):
             json_raw = f.read()
         try:
             data = json.loads(json_raw)
-        except Exception:
+        except Exception:  # pylint: disable=broad-exception-caught
             return None
         return data

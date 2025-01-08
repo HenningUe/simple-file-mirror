@@ -2,10 +2,7 @@
 import os
 import sys
 import pathlib
-try:
-    import ConfigParser as configparser
-except ImportError:
-    import configparser as configparser
+import configparser
 import re
 import platform
 import textwrap
@@ -14,7 +11,7 @@ import codecs
 from . import _glob, _winapi
 
 
-class DirectoryGetter(object):
+class DirectoryGetter:
 
     @classmethod
     def get_drive_root(cls):
@@ -37,32 +34,30 @@ class DirectoryGetter(object):
         trgt_dir = os.path.join(trgt_dir, drive_name)
         parent_parent = pathlib.Path(trgt_dir).parent.parent
         if not parent_parent.is_dir():
-            msg = ("Target path's parent's parent is missing {}"
-                   .format(str(parent_parent)))
+            msg = (f"Target path's parent's parent is missing "
+                   f"'{str(parent_parent)}'")
             print(msg)
             return None
         return trgt_dir
 
 
-class FileSyncIni(object):
+class FileSyncIni:
 
     @classmethod
     def check_ini_file(cls):
         file_p = cls.get_config_file_path()
-        if not os.path.isfile(file_p):
+        ini_file_exists = os.path.isfile(file_p)
+        if not ini_file_exists:
             cls.create_template()
-            msg = ("Ini-file missing. Created at: {}"
-                   .format(file_p))
+            msg = f"Ini-file missing. Created at: {file_p}"
             print(msg)
-            return False
         else:
             computer_name = platform.node().lower()
             if not cls.is_secion_in_ini_file(computer_name):
-                msg = ("in Ini-file '{}' section '{}' for this PC is missing."
-                       .format(file_p, computer_name))
+                msg = (f"in Ini-file '{file_p}' section '{computer_name}' "
+                       f"for this PC is missing.")
                 print(msg)
-                return False
-        return True
+        return ini_file_exists
 
     @classmethod
     def is_secion_in_ini_file(cls, section_to_test=None):
@@ -85,7 +80,7 @@ class FileSyncIni(object):
         section_names = [s for s in cfg.sections() if s.lower() == computer_name]
         trgt_dir = cfg.get(section_names[0], 'target_directory')
         if "%" in trgt_dir:
-            regpat = "^(.*?)(\%.*?\%)(.*)$"
+            regpat = r"^(.*?)(\%.*?\%)(.*)$"
             re_m = re.match(regpat, trgt_dir)
             if re_m is not None:
                 env_name = re_m.group(2)

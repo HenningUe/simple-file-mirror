@@ -14,10 +14,6 @@
 import ctypes
 import os
 
-try:
-    _default_str = unicode  # @UndefinedVariable
-except NameError:
-    _default_str = str
 
 _DWORD = ctypes.c_ulong
 MAX_PATH = ctypes.c_int(260)
@@ -25,15 +21,15 @@ MAX_PATH_NULL = int(MAX_PATH.value) + 1
 
 
 def decode(s):
-    if isinstance(s, _default_str):
+    if isinstance(s, str):
         return s
     return s.decode('mbcs')
 
 
 def set_file_attr_to_hidden(file_path):
-    FILE_ATTRIBUTE_HIDDEN = 2
+    cst_file_attr_hidden = 2
     ctypes.windll.kernel32.SetFileAttributesW(file_path,  # @UndefinedVariable
-                                              FILE_ATTRIBUTE_HIDDEN)
+                                              cst_file_attr_hidden)
 
 
 def get_volume_name(root_path_name):

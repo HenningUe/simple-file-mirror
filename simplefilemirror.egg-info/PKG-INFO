@@ -1,0 +1,41 @@
+Metadata-Version: 2.1
+Name: simplefilemirror
+Version: 1.0.6
+Summary: Simple file mirror
+Author-email: Henning Uekötter <henning@gmail.com>
+Project-URL: Repository, https://github.com/HenningUe/simple-file-sync
+Keywords: sync,synchronize,mirror,file
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Topic :: System :: Filesystems 
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.12
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+Requires-Dist: python-utils>=3.4.5
+Requires-Dist: progressbar2>=4.2.0
+
+simple-file-mirror
+==================
+
+A simple - one way only - file mirroring package
+
+Description
+~~~~~~~~~~~
+
+In fact, it is more like a file update mechanism. Update actions are: \*
+Source file is present, destination missing, not tagged -> Copy. \*
+Source file is present, destination missing, tagged -> [No action]. \*
+Source file is present, destination present-> [No action]. \* Source
+file is missing, destination present-> [No action]
+
+‘Tagging’ is done via a json-file, which tracks files already copied.
+
+Example
+~~~~~~~
+
+A running example is available in ``'_test'``. Run ``'run_test.py'`` for demonstration.
