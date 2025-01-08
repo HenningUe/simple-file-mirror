@@ -1,2 +1,0 @@
-python-utils>=3.4.5
-progressbar2>=4.2.0
